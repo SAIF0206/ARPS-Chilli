@@ -2,8 +2,13 @@ const Sequelize = require("sequelize");
 const db = require("../config/Database");
 
 const User = db.define(
-  "users",
+  "user",
   {
+    Id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     Name: {
       type: Sequelize.STRING
     },
