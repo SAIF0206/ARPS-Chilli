@@ -4,6 +4,7 @@ const db = require("../../config/Database");
 const User = require("../../models/User"); //Model name is users
 const brcypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const keys = require("../../config/keys");
 
 //@route    GET api/users/display
 //@desc     Display users routes
@@ -66,7 +67,28 @@ router.post("/login", (req, res) => {
     .then(user => {
       if (user) {
         if (brcypt.compareSync(req.body.Password, user.Password)) {
-          res.send({ status: user.Name + " Sucessfull" });
+          //User is Matched
+
+          //create JWT Payload
+          const payload = {
+            Name: user.Name,
+            UserName: user.UserName
+          };
+
+          //Sign Token
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            {
+              expiresIn: 86400
+            },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
+            }
+          );
         } else {
           res.status(400).json({ error: "UserName or Password Incorrect" });
         }

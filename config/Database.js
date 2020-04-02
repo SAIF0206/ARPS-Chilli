@@ -12,5 +12,6 @@ module.exports = new Sequelize("ChilliARPS", "chillipadi", "trEg45Vz", {
     min: 0,
     acquire: 30000,
     idle: 10000
-  }
+  },
+  secretOrKey: "secret"
 });
