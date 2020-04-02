@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../../config/Database");
 const User = require("../../models/User"); //Model name is users
 const brcypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 //@route    GET api/users/display
 //@desc     Display users routes
@@ -66,9 +67,11 @@ router.post("/login", (req, res) => {
       if (user) {
         if (brcypt.compareSync(req.body.Password, user.Password)) {
           res.send({ status: user.Name + " Sucessfull" });
+        } else {
+          res.status(400).json({ error: "UserName or Password Incorrect" });
         }
       } else {
-        res.status(400).json({ error: "UserName or Password Incorrect" });
+        res.status(400).json({ error: "UserName Not Found !!" });
       }
     })
     .catch(err => {
