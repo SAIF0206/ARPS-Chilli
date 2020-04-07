@@ -22,10 +22,12 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mimic-response": "^2.1.0",
     "msnodesqlv8": "^1.0.1",
     "mssql": "^6.2.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "picomatch": "^2.2.2",
     "sequelize": "^5.21.5",
     "tedious": "^8.2.0",
     "validator": "^13.0.0"

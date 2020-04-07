@@ -3,6 +3,7 @@ const users = require("./routes/api/users");
 const drivers = require("./routes/api/drivers");
 const bodyParser = require("body-parser");
 const app = express();
+const passport = require("passport");
 
 //Database
 const db = require("./config/Database");
@@ -10,13 +11,17 @@ const db = require("./config/Database");
 //Test DB
 db.authenticate()
   .then(() => console.log("Database connected"))
-  .catch(err => console.log("Error: " + err));
+  .catch((err) => console.log("Error: " + err));
 
 //Body Parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/test", (req, res) => res.send("Hello Sequelize"));
+//Passport middleware
+app.use(passport.initialize());
+
+//Passport Config
+require("./config/passport")(passport);
 
 //Use Routes
 app.use("/api/users", users);
