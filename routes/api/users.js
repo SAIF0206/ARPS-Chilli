@@ -86,6 +86,8 @@ router.post("/login", (req, res) => {
             },
             (err, token) => {
               res.json({
+                Name: user.Name,
+                UserName: user.UserName,
                 success: true,
                 token: "Bearer " + token,
               });
@@ -110,7 +112,7 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.json({ msg: "Success" });
+    res.json({ msg: " Success" });
   }
 );
 

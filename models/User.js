@@ -7,20 +7,20 @@ const User = db.define(
     Id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     Name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     UserName: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
     },
     Password: {
-      type: Sequelize.STRING
-    }
+      type: Sequelize.STRING,
+    },
   },
   {
-    timestamps: false
+    timestamps: false,
   }
 );
 
