@@ -4,6 +4,7 @@ const drivers = require("./routes/api/drivers");
 const bodyParser = require("body-parser");
 const app = express();
 const passport = require("passport");
+const orders = require("./routes/api/orders");
 
 //Database
 const db = require("./config/Database");
@@ -26,6 +27,7 @@ require("./config/passport")(passport);
 //Use Routes
 app.use("/api/users", users);
 app.use("/api/drivers", drivers);
+app.use("/api/order", orders);
 
 const port = process.env.PORT || 4000;
 
