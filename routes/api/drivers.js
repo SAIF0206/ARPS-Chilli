@@ -3,8 +3,8 @@ const router = express.Router();
 const db = require("../../config/Database");
 const Driver = require("../../models/Driver");
 
-// @route   GET api/drivers/display
-//@desc     Tests driver routes
+// @route   GET api/drivers/data
+//@desc     Display drivers
 //@access   Public
 router.get("/data", (req, res) =>
   Driver.findAll()

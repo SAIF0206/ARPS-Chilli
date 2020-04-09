@@ -8,9 +8,9 @@ const Order = require("../../models/Order");
 //@access   Public
 router.get("/orderdata", (req, res) =>
   Order.findAll()
-    .then((orders) => {
+    .then((order) => {
       console.log(Order);
-      res.send(orders).json;
+      res.send(order).json;
     })
     .catch((err) => console.log("Error !!" + err))
 );
