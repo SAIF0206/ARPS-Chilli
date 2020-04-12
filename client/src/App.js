@@ -1,25 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 
 import "./App.css";
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
-import Landing from "./components/layout/Landing";
-import Login from "./components/auth/Login";
+import Login from './views/login/Login'
+import Home from './views/home/Home'
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar />
-        <Route exact path="/" component={Landing} />
-        <div className="container">
-          <Route exact path="/login" component={Login} />
-        </div>
-        <Footer />
+        <Route exact path="/" component={Login} />
+        <Route exact path="/Home" component={Home} />
       </div>
     </Router>
   );
 }
 
 export default App;
+
+
