@@ -1,11 +1,10 @@
 import React from "react";
 import axios from "axios";
-import {withRouter} from "react-router-dom";
-
+import { withRouter } from "react-router-dom";
 
 class LoginForm extends React.Component {
-  constructor(props){
-		super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       UserName: "",
       Password: "",
@@ -15,8 +14,6 @@ class LoginForm extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-
-  
   onSubmit(e) {
     e.preventDefault();
 
@@ -28,10 +25,10 @@ class LoginForm extends React.Component {
     axios
       .post("/api/users/login", user)
       .then((res) => {
-        console.log(res.data)
-        if(res.data.success === true){
-          this.props.history.push('/home')
-      };
+        console.log(res.data);
+        if (res.data.success === true) {
+          this.props.history.push("/home");
+        }
       })
       .catch((err) => console.log("Password Incorrect" + err));
   }
@@ -46,7 +43,10 @@ class LoginForm extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-4 m-auto">
-              <h1 className="display-4 text-center"> <font color={'#ffffff'}>Log In</font></h1>
+              <h1 className="display-4 text-center">
+                {" "}
+                <font color={"#ffffff"}>Log In</font>
+              </h1>
               <p className="lead text-center">Sign in to your ARPS account</p>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
@@ -71,7 +71,7 @@ class LoginForm extends React.Component {
                     onChange={this.onChange}
                   />
                 </div>
-                <input type="submit" className="btn btn-info btn-block mt-4"/>
+                <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>
