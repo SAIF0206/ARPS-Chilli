@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const passport = require("passport");
 const orders = require("./routes/api/orders");
+const cors = require("cors");
 
 //Database
 const db = require("./config/Database");
@@ -15,6 +16,7 @@ db.authenticate()
   .catch((err) => console.log("Error: " + err));
 
 //Body Parser middleware
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
