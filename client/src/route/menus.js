@@ -7,14 +7,15 @@ export const menus = [{
         path: '/order',
         title: 'Order',
         icon: 'table',
-        // children: [{
-        //         path: '/table/driver',
-        //         title: 'Driver status'
-        //     },
-        //     {
-        //         path: '/table/order',
-        //         title: 'Order'
-        //     },
-        // ]
+    },
+    {
+        path: '/driver',
+        title: 'Driver',
+        icon: 'table',
+    },
+    {
+        path: '/Login',
+        title: 'Logout',
+        icon: 'table',
     },
 ]

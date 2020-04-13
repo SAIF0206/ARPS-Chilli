@@ -1,119 +1,128 @@
 import React, { Component } from 'react';
 import { Table } from 'antd';
 
-
-class Order extends Component {
-
-	state = {
-		data: [],
-		pagination: {
-			pageSize: 200,
-			current: 1
-		},
-		loading: false,
-		selectedRowKeys: [],
-		columns: [
-			{
-				title: 'OrderID',
-				dataIndex: 'id',
-				width: 100,
-				align: 'center',
+export default class OrderIndex extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			items: [],
+			isLoaded: false,
+			pagination: {
+				pageSize: 200,
+				current: 1
 			},
-			{
-				title: 'Address',
-				dataIndex: 'address',
-				width: 200,
-				align: 'center',
-			},
-			{
-				title: 'Time',
-				dataIndex: 'time',
-				width: 1000,
-				align: 'left',
+			loading: false,
+			// selectedRowKeys: [],
 
-			}
-		],
-		currentRow: null
+			//table header
+			columns: [
+				{
+					title: 'OrderID',
+					dataIndex: 'Id',
+					key: 'id',
+					width: 100,
+					align: 'center',
+					fixed: 'left',
+				},
+				{
+					title: 'EventType',
+					dataIndex: 'EventType',
+					key: 'eventType',
+					width: 250,
+					align: 'center',
+				},
+				{
+					title: 'Address',
+					dataIndex: 'Street',
+					key: 'address',
+					width: 300,
+					align: 'center',
+				},
+				{
+					title: 'MenuPax',
+					dataIndex: 'MenuPax',
+					key: 'menuPax',
+					width: 80,
+					align: 'center',
+				},
+				{
+					title: 'Time',
+					dataIndex: 'FunctionDate',
+					key: 'functionDate',
+					width: 1000,
+					align: 'left',
+
+				}
+			],
+			currentRow: null
+		};
+	}
+	handleToggle = prop => enable => {
+		this.setState({ [prop]: enable });
 	};
 
-	componentWillMount() {
-		const { pageSize, current } = this.state.pagination;
-		this.fetch(current, pageSize);
-	}
+	componentDidMount() {
+		fetch('http://localhost:4000/api/order/orderdata')
+			.then(res => res.json())
+			.then(json => {
+
+				// jsonData is parsed json object received from url
+				console.log(json)
+				const pagination = { ...this.state.pagination };
+				// Read total count from server
+				pagination.total = json.totalCount
+				pagination.total = 200;
+				this.setState({
+					loading: false,
+					items: json,
+					pagination
+				});
+			})
+			.catch((error) => {
+				// handle your errors here
+				console.error(error)
+			})
+
+
+	};
+
 
 	componentWillUnmount() {
-		// componentWillMount进行异步操作时且在callback中进行了setState操作时，需要在组件卸载时清除state
 		this.setState = () => {
 			return;
 		};
 	}
 
-
-	//fetch data
-	fetch = (pageCurrent, pageSize) => {
-		this.setState({ loading: true });
-		setTimeout(() => {
-			const pager = { ...this.state.pagination };
-			pager.total = 100;
-			const data = [];
-			for (let i = (pageCurrent - 1) * pageSize; i < pageSize * pageCurrent; i++) {
-				data.push({
-					key: i,
-					id: `A00000${i}`,
-					address: `MBS, DBS No.${i}`,
-					time:'9:00'
-				});
-			}
-			this.setState({
-				loading: false,
-				data,
-				pagination: pager
-			});
-		}, 1000);
-	};
-
-	//selet row
-	selectRow = record => {
-		const selectedRowKeys = [...this.state.selectedRowKeys];
-		if (selectedRowKeys.indexOf(record.key) >= 0) {
-			selectedRowKeys.splice(selectedRowKeys.indexOf(record.key), 1);
-		} else {
-			selectedRowKeys.push(record.key);
-		}
-		this.setState({ selectedRowKeys });
-	};
-	onSelectedRowKeysChange = selectedRowKeys => {
-		console.log('selectedRowKeys changed: ', selectedRowKeys);
-		this.setState({ selectedRowKeys });
-	};
-
-
+	// handleTableChange = (pagination, filters, sorter) => {
+	// 	const pager = { ...this.state.pagination };
+	// 	pager.current = pagination.current;
+	// 	this.setState({
+	// 		pagination: pager
+	// 	});
+	// 	this.fetch({
+	// 		page: pagination.current,
+	// 		sortField: sorter.field,
+	// 		sortOrder: sorter.order,
+	// 		...filters
+	// 	});
+	// };
 
 	render() {
-		const { selectedRowKeys, loading, pagination, columns, data } = this.state;
-		const rowSelection = {
-			selectedRowKeys,
-			onChange: this.onSelectedRowKeysChange
-		};
 		return (
-			<div className="shadow-radius">
+			<div>
 				<Table
 					bordered
-					columns={columns}
-					dataSource={data}
-					loading={loading}
-					onChange={this.handleTableChange}
-					pagination={pagination}
-					rowSelection={rowSelection}
-					onRow={record => ({
-						onClick: () => {
-							this.selectRow(record);
-						}
-					})}
+					columns={this.state.columns}
+					dataSource={this.state.items}
+					loading={this.state.loading}
+					// onChange={this.handleTableChange}
+					pagination={this.state.pagination}
+					// rowKey={record => record.location.postcode}
 				/>
 			</div>
 		);
 	}
 }
 
-export default Order;
+
+

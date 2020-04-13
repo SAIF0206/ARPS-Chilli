@@ -1,20 +1,23 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from '../views/home/Home'
-import Order from '../views/order/Order'
-import Login from '../views/login/Login'
+import Layout from '../views/layout'
+import routes from './routes'
 
 const Router = () => {
-	return (
-		<Router>
-			<Switch>
-				<Route component={Login} exact path="/login" />
-				<Route path="/home" component={Home} />
-				<Route path="/order" component={Order} />
-				{/* <Route path="/login" component={Login} /> */}
-			</Switch>
-		</Router>
-	);
+    return ( <
+        Router >
+        <
+        Switch >
+        <
+        Route component = { Login }
+        exact path = "/login" / >
+        <
+        Route path = "/"
+        component = { Layout }
+        /> <
+        /Switch> <
+        /Router>
+    );
 };
 
 export default Router;

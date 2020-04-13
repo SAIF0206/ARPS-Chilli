@@ -1,10 +1,13 @@
 import Home from '../views/home/Home';
-import Order from '../views/home/Order';
-import Login from '../views/home/Login';
+import OrderDetail from '../views/order/OrderDetail.page';
+import Login from '../views/login/Login';
+import Driver from '../views/driver/Driver'
+
 
 
 export const routes = [
     { path: '/home', exact: true, component: Home },
-    { path: '/order', component: Order },
-    { path: '/login', component: Login }
+    { path: '/orderdetail', component: OrderDetail },
+    { path: '/login', component: Login },
+    { path: '/login', component: Driver }
 ]

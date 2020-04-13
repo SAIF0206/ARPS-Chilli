@@ -9,6 +9,9 @@
 ** VS code as IDE for Visual Studion
 ** Need Stagging Serevr MSSQL database  to store the data
 ** Postman to test API
+** Download Chrome extension. 
+** https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=zh-CN
+
 
 
 Important Urls,
