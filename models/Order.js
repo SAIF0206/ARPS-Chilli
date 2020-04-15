@@ -25,7 +25,7 @@ module.exports = db.define(
       type: Sequelize.STRING,
     },
     FunctionDate: {
-      type: Sequelize.DATE,
+      type: Sequelize.STRING,
     },
     DeliveryTime: {
       type: Sequelize.DECIMAL,
