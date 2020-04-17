@@ -3,13 +3,14 @@ const router = express.Router();
 const db = require("../../config/Database");
 const Order = require("../../models/Order");
 const { Op } = require("sequelize");
-// const Sequelize = require("sequelize");
+//const Sequelize = require("sequelize");
 
 // @route   GET /api/order/orderdata
 //@desc     Display Data
 //@access   Public
 router.get("/orderdata", (req, res) =>
   Order.findAll({
+    // Algorithm to display data according to date
     where: {
       FunctionDate: {
         [Op.between]: [
@@ -20,18 +21,6 @@ router.get("/orderdata", (req, res) =>
     },
   })
     .then((order) => {
-      res.send(order).json;
-    })
-    .catch((err) => console.log("Error !!" + err))
-);
-
-// @route   GET /aip / order / display;
-//@desc     Display Data
-//@access   Public
-router.get("/display", (req, res) =>
-  Order.findAll()
-    .then((order) => {
-      console.log(Order.FunctionDate);
       res.send(order).json;
     })
     .catch((err) => console.log("Error !!" + err))

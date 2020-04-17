@@ -17,7 +17,7 @@
 Important Urls,
 
 GET Request
-http://localhost:4000/api/order/orderdata		--get all the orders from the database
+http://localhost:4000/api/order/orderdata		--get all the orders from the databse         ->                                                according to Date
 http://localhost:4000/api/drivers/data			--get all the driver Data
 http://localhost:4000/api/users/current			--JWT tokens for protected routes and example for future use case
 http://localhost:4000/api/users/display			--Just to display users we will remove this in future while deployement.

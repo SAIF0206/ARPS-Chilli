@@ -6,6 +6,7 @@ const Driver = require("../../models/Driver");
 // @route   GET api/drivers/data
 //@desc     Display drivers
 //@access   Public
+//Make a lot of changes in driver's Data.
 router.get("/data", (req, res) =>
   Driver.findAll()
     .then((drivers) => {

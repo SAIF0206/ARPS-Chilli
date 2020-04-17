@@ -7,21 +7,9 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 
-//@route    GET api/users/display
-//@desc     Display users routes
+//@route    GET api/users/register
+//@desc     Add a User
 //@access   Public
-router.get("/display", (req, res) =>
-  User.findAll()
-    .then((users) => {
-      console.log(User);
-      res.send(users).json;
-    })
-    .catch((err) => console.log("ERROR !! " + err))
-);
-
-// //@route    GET api/users/register
-// //@desc     Add a User
-// //@access   Public
 
 router.post("/register", (req, res) => {
   const data = {

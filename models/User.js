@@ -5,6 +5,7 @@ const User = db.define(
   "user",
   {
     Id: {
+      // AutoIncrement in ID
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,

@@ -5,6 +5,7 @@ module.exports = db.define(
   "driver",
   {
     Id: {
+      // AutoIncrement in ID
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
