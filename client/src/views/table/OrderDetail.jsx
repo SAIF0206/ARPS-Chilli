@@ -5,7 +5,7 @@ export default class OrderDetails extends Component{
   constructor( props ) {
     super( props );
     this.state = {
-      items: {},
+      items: [],
       jsonOptions: {
         displayDataTypes: false,
         collapseStringsAfterLength: 20,

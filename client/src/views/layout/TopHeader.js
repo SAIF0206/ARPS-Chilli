@@ -18,7 +18,8 @@ export default class TopHeader extends Component {
                         <Menu theme="dark" mode="horizontal" style={{ paddingTop: '8px' }} >
                             <Menu.Item key="1"><Link to="/OrderDetailPage" />Order</Menu.Item>
                             <Menu.Item key="2"><Link to="/Driver" />Driver</Menu.Item>
-                            <Menu.Item key="3"><Link to="/" />Logout</Menu.Item>
+                            {/* <Menu.Item key="2"><Link to="/RoutePlan" />RoutePlan</Menu.Item> */}
+                            <Menu.Item key="4"><Link to="/" />Logout</Menu.Item>
                             {/* <span>
                                 <Link to="/">Logout</Link>
                             </span> */}

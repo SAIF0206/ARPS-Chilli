@@ -4,19 +4,13 @@ import Layout from '../views/layout'
 import routes from './routes'
 
 const Router = () => {
-    return ( <
-        Router >
-        <
-        Switch >
-        <
-        Route component = { Login }
-        exact path = "/login" / >
-        <
-        Route path = "/"
-        component = { Layout }
-        /> <
-        /Switch> <
-        /Router>
+    return ( <Router >
+        <Switch >
+        <Route component = { Login }exact path = "/login" / >
+        <Route path = "/"component = { Layout }
+        /> 
+        </Switch> 
+        </Router>
     );
 };
 

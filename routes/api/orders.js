@@ -5,10 +5,10 @@ const Order = require("../../models/Order");
 const { Op } = require("sequelize");
 //const Sequelize = require("sequelize");
 
-// @route   GET /api/order/orderdata
+// @route   GET /api/order/date
 //@desc     Display Data
 //@access   Public
-router.get("/orderdata", (req, res) =>
+router.get("/date", (req, res) =>
   Order.findAll({
     // Algorithm to display data according to date
     where: {
@@ -20,6 +20,17 @@ router.get("/orderdata", (req, res) =>
       },
     },
   })
+    .then((order) => {
+      res.send(order).json;
+    })
+    .catch((err) => console.log("Error !!" + err))
+);
+
+// @route   GET /api/order/orderdata
+//@desc     Display Data
+//@access   Public
+router.get("/orderdata", (req, res) =>
+  Order.findAll()
     .then((order) => {
       res.send(order).json;
     })

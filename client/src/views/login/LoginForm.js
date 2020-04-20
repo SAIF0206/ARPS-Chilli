@@ -51,7 +51,7 @@ class LoginForm extends React.Component {
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
-                    required="true"
+                    required={true}
                     type="Email"
                     className="form-control form-control-lg"
                     placeholder="Account"

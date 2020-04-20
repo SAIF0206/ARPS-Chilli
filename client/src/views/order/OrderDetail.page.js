@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import '../home/index.css';
 
-import Demo from '../table/OrderDetail.table'
+import OrderInfo from '../../views/table/OrderInfo'
 import TopHeader from '../layout/TopHeader'
 import BotFooter from '../layout/BotFooter'
 
@@ -14,7 +14,7 @@ class OrderDetailPage extends Component {
                 <div style={{ padding: '0 50px' }}>
                     <div className="site-layout-content">
                         <h2>Order Details Page</h2>
-                        <Demo/>
+                        <OrderInfo />
                     </div>
                 </div>
                 <BotFooter/>
