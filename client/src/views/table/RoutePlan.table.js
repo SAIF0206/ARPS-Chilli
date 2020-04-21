@@ -1,59 +1,53 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Table, Button, Row, Col, Popover } from 'antd';
-import {
-	BrowserRouter as Router,
-	// Switch,
-	// Route,
-	Link,
-	// Redirect,
-	// useParams,
-	// useHistory,
-	withRouter
-} from "react-router-dom";
+import { Table, Button, Row, Col, Popover, Divider, Form, Select } from 'antd';
+import {BrowserRouter as Router,Link,withRouter} from "react-router-dom";
 // import TimeSlider from '../../components/TimeSlider';
 import WWRoutePlan from '../../components/WWRoutePlan'
+import AddHelper from '../../components/AddHelper'
 
+const { Option } = Select;
 const clickContent = <div>This is click content.</div>;
 
 class RoutePlanTable extends React.Component {
 	state = {
 		clicked: false,
 		hovered: false,
-	  };
+	};
 
-	  hide = () => {
+	hide = () => {
 		this.setState({
-		  clicked: false,
-		  hovered: false,
+			clicked: false,
+			hovered: false,
 		});
-	  };
-	
-	  handleHoverChange = visible => {
+	};
+
+	handleHoverChange = visible => {
 		this.setState({
-		  hovered: visible,
-		  clicked: false,
+			hovered: visible,
+			clicked: false,
 		});
-	  };
-	
-	  handleClickChange = visible => {
+	};
+
+	handleClickChange = visible => {
 		this.setState({
-		  clicked: visible,
-		  hovered: false,
+			clicked: visible,
+			hovered: false,
 		});
-	  };
+	};
 
 	constructor() {
 		super();
 		this.handleClickId = this.handleClickId.bind(this)
 		this.state = {
 			selectedOrder: [],
+			driver: [],
 			items: [],
 			isLoaded: false,
 			pagination: {
-					// disabled:true,
-					pageSize: 9999,
-					hideOnSinglePage:true,
+				// disabled:true,
+				pageSize: 9999,
+				hideOnSinglePage: true,
 			},
 			loading: false,
 			// selectedRowKeys: [],
@@ -76,17 +70,17 @@ class RoutePlanTable extends React.Component {
 					render: orderId =>
 						<Popover
 							content={
-							<div>
-							<div>{clickContent }</div>
-							{/* <Divider dashed/> */}
-							<Link to='/OrderDetailPage'>More Detail</Link>
-						
-							</div>
-						}
+								<div>
+									<div>{clickContent}</div>
+									{/* <Divider dashed/> */}
+									<Link to='/OrderDetailPage'>More Detail</Link>
+
+								</div>
+							}
 							title={'Order ID: ' + orderId}
 							trigger="click"
-							// visible={this.state.visible}
-							// onVisibleChange={this.handleVisibleChange}
+						// visible={this.state.visible}
+						// onVisibleChange={this.handleVisibleChange}
 						>
 							<Button type="primary" ghost>{orderId}</Button>
 							{/* <Button size='small' onClick={this.showModal}>{orderId}</Button>
@@ -104,13 +98,29 @@ class RoutePlanTable extends React.Component {
 					align: 'center',
 					fixed: 'left',
 				},
-				// {
-				// 	title: 'EventType',
-				// 	dataIndex: 'EventType',
-				// 	key: 'eventType',
-				// 	width: 250,
-				// 	align: 'center',
-				// },
+				{
+					title: 'Driver',
+					dataIndex: 'Driver',
+					key: 'driver',
+					render: driver =>
+						<div>
+							{driver}Driver from ww
+						</div>,
+					width: 150,
+					align: 'center',
+				},
+				{
+					title: 'Helper',
+					dataSource:`${this.state.driver}`,
+					dataIndex: 'Name',
+					key: 'driver',
+					render: driver =>
+					<div>
+						<AddHelper content={driver}/>
+					</div>,
+					width: 100,
+					align: 'center',
+				},
 				// {
 				// 	title: 'Address',
 				// 	dataIndex: 'Street',
@@ -134,7 +144,7 @@ class RoutePlanTable extends React.Component {
 							<Row>
 
 								<Col span={24}>
-									<WWRoutePlan  content={e}/>
+									<WWRoutePlan content={e} />
 								</Col>
 								{/* <Col span={i2}>
 								<Slider range step='3.125' defaultValue={[37.5, 50]} />
@@ -188,6 +198,20 @@ class RoutePlanTable extends React.Component {
 				// handle your errors here
 				console.error(error)
 			})
+		fetch('http://localhost:4000/api/drivers/data')
+			.then(res => res.json())
+			.then(json => {
+				// jsonData is parsed json object received from url
+				console.log(json)
+				this.setState({
+					loading: false,
+					driver: json,
+				});
+			})
+			.catch((error) => {
+				// handle your errors here
+				console.error(error)
+			})
 	};
 
 	handleSelectDate() {
@@ -228,7 +252,7 @@ class RoutePlanTable extends React.Component {
 						// onChange={this.handleTableChange}
 						pagination={this.state.pagination}
 					// rowKey={record => record.location.postcode}
-
+					scroll={{ x: '140%', y: 500 }}
 					/>
 					{/* <Switch>
 						<Route path="/OrderDetailPage/:Id" children={<Child />} />

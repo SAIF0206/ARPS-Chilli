@@ -3,7 +3,6 @@ const router = express.Router();
 const db = require("../../config/Database");
 const Order = require("../../models/Order");
 const { Op } = require("sequelize");
-//const Sequelize = require("sequelize");
 
 // @route   GET /api/order/date
 //@desc     Display Data
@@ -18,6 +17,9 @@ router.get("/date", (req, res) =>
           req.body.FunctionDate + "T23:59:59.000Z",
         ],
       },
+    },
+    update: {
+      Volume: 0,
     },
   })
     .then((order) => {

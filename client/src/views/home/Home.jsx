@@ -13,20 +13,29 @@ class Index extends Component {
     constructor(props) {
         super(props)
         this.state = {
-    
+            date:"",
         }
     
         this.handleClickDriver = this.handleClickDriver.bind(this)
-
         this.handleClickWW = this.handleClickWW.bind(this)
+        this.handleSelectDate=this.handleSelectDate.bind(this)
     }
 
-    handleClickDriver(){
-        this.props.history.push("/driver")
+    handleSelectDate(date){
+        this.setState({
+            date
+        })
     }
-
-
     
+    handleClickDriver(){
+        let wwdate=this.state.date
+        console.log(wwdate)
+        this.setState({
+            wwdate
+        })
+        this.props.history.push("/driver")
+
+    }
 
     handleClickWW(){
         this.props.history.push("/RoutePlan")
@@ -40,15 +49,15 @@ class Index extends Component {
                 <div style={{ padding: '0 50px' }}>
                     <div className="site-layout-content" >
                         <br />
-                        <div>
-                            <DateSelect/>
-                            {/* <DatePicker disabledDate={disabledDate} onChange={handleSelectDate} /> */}                 
+                        <div> 
+                            <DateSelect handleSelectDate={date=>this.handleSelectDate(date)} />
+                                      
                             <Button type="primary" style={{ marginLeft: '16px' }} onClick={this.handleClickDriver}>Driver</Button>
                             
-                            <Button type="primary" danger style={{ marginLeft: '8px' }}onClick={this.handleClickWW}>Send to Workwave</Button>
+                            <Button type="primary" danger style={{ marginLeft: '8px' }} onClick={this.handleClickWW}>Send to Workwave</Button>
                         </div>
                         <br />
-                        <Order />
+                        <Order date={this.state.date}/>
                     </div>
                 </div>
                 <BotFooter />

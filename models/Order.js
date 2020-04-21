@@ -145,6 +145,9 @@ module.exports = db.define(
     SpecialInstructions: {
       type: Sequelize.STRING,
     },
+    Volume: {
+      type: Sequelize.INTEGER,
+    },
   },
   {
     timestamps: false,
