@@ -18,10 +18,8 @@ router.get("/date", (req, res) =>
         ],
       },
     },
-    update: {
-      Volume: 0,
-    },
   })
+
     .then((order) => {
       res.send(order).json;
     })
@@ -34,9 +32,158 @@ router.get("/date", (req, res) =>
 router.get("/orderdata", (req, res) =>
   Order.findAll()
     .then((order) => {
+      //Algorithm To calculate Volume
+      if (!Volume) {
+        Order.update(
+          {
+            Volume: 80,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [1, 30],
+              },
+            },
+          }
+        );
+        Order.update(
+          {
+            Volume: 140,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [31, 60],
+              },
+            },
+          }
+        );
+        Order.update(
+          {
+            Volume: 220,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [61, 90],
+              },
+            },
+          }
+        );
+        Order.update(
+          {
+            Volume: 280,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [91, 120],
+              },
+            },
+          }
+        );
+        Order.update(
+          {
+            Volume: 350,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [120, 200],
+              },
+            },
+          }
+        );
+      }
       res.send(order).json;
     })
     .catch((err) => console.log("Error !!" + err))
 );
+// // @route   GET /api/order/updateVolume
+// //@desc     Display Data
+// //@access   Public
+// router.get("/updateVolume", (req, res) =>
+//   //Update Volume
+//   // Order.update(
+//   //   {
+//   //     Volume: 140,
+//   //   },
+//   //   {
+//   //     where: {
+//   //       MenuPax: {
+//   //         [Op.between]: [31, 60],
+//   //       },
+//   //     },
+//   //   }
+//   // ).then((count) => {
+//   //   console.log("Rows updated " + count);
+//   // })
+//   Order.findAll()
+//     .then((order) => {
+//       Order.update(
+//         {
+//           Volume: 80,
+//         },
+//         {
+//           where: {
+//             MenuPax: {
+//               [Op.between]: [1, 30],
+//             },
+//           },
+//         }
+//       );
+//       Order.update(
+//         {
+//           Volume: 140,
+//         },
+//         {
+//           where: {
+//             MenuPax: {
+//               [Op.between]: [31, 60],
+//             },
+//           },
+//         }
+//       );
+//       Order.update(
+//         {
+//           Volume: 220,
+//         },
+//         {
+//           where: {
+//             MenuPax: {
+//               [Op.between]: [61, 90],
+//             },
+//           },
+//         }
+//       );
+//       Order.update(
+//         {
+//           Volume: 280,
+//         },
+//         {
+//           where: {
+//             MenuPax: {
+//               [Op.between]: [91, 120],
+//             },
+//           },
+//         }
+//       );
+//       Order.update(
+//         {
+//           Volume: 350,
+//         },
+//         {
+//           where: {
+//             MenuPax: {
+//               [Op.between]: [120, 200],
+//             },
+//           },
+//         }
+//       );
+
+//       res.send(order).json;
+//     })
+//     .catch((err) => console.log("Error !!" + err))
+// );
 
 module.exports = router;
