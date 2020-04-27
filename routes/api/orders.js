@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../../config/Database");
 const Order = require("../../models/Order");
 const { Op } = require("sequelize");
+const axios = require("axios");
 
 // @route   GET /api/order/date
 //@desc     Display Data
@@ -95,11 +96,34 @@ router.get("/orderdata", (req, res) =>
             },
           }
         );
-      }
+      } //Volume Code Ends here.
 
+      //Here to get all data.
       res.send(order).json;
     })
     .catch((err) => console.log("Error !!" + err))
 );
+
+// @route   GET /api/order/workwave
+//@desc     Display Data
+//@access   Public
+router.get("/workwave", (req, res) => {
+  axios
+    .get(
+      "https://wwrm.workwave.com/api/v1/territories/922b603c-c822-4469-89a7-e9bacab8abfb/orders?include=all",
+      {
+        headers: {
+          Accept: "application/json",
+          "X-WorkWave-Key": "655be892-096b-48d4-9cd0-86cfba1ce55a",
+        },
+      }
+    )
+    .then((data) => {
+      res.send(data.data.orders);
+    })
+    .catch((err) => {
+      console.log("Errors" + err);
+    });
+});
 
 module.exports = router;
