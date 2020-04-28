@@ -9,10 +9,16 @@ module.exports = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    ChilliCompanyId: {
+      type: Sequelize.INTEGER,
+    },
     CustomerId: {
       type: Sequelize.UUID,
     },
     OrderDate: {
+      type: Sequelize.DATE,
+    },
+    InvoiceDate: {
       type: Sequelize.DATE,
     },
     InvoiceId: {
@@ -79,6 +85,13 @@ module.exports = db.define(
     MenuSection: {
       type: Sequelize.INTEGER,
     },
+    DriverId: {
+      type: Sequelize.INTEGER,
+    },
+    DriverName: {
+      type: Sequelize.DATE,
+    },
+
     DeliveryRate: {
       type: Sequelize.DECIMAL,
     },
@@ -90,6 +103,9 @@ module.exports = db.define(
     },
     Remark: {
       type: Sequelize.STRING,
+    },
+    JobNumber: {
+      type: Sequelize.INTEGER,
     },
     PackedTime: {
       type: Sequelize.DATE,
@@ -112,14 +128,14 @@ module.exports = db.define(
     SetupDetails: {
       type: Sequelize.STRING,
     },
+    NOrderId: {
+      type: Sequelize.INTEGER,
+    },
     UpdatedDateTime: {
       type: Sequelize.DATE,
     },
     ReadyTime: {
       type: Sequelize.STRING,
-    },
-    NodeOrderId: {
-      type: Sequelize.INTEGER,
     },
     PaymentMethodId: {
       type: Sequelize.STRING,
@@ -143,6 +159,12 @@ module.exports = db.define(
       type: Sequelize.DECIMAL,
     },
     SpecialInstructions: {
+      type: Sequelize.STRING,
+    },
+    AddOnsPrice: {
+      type: Sequelize.DECIMAL,
+    },
+    CouponCode: {
       type: Sequelize.STRING,
     },
     Volume: {

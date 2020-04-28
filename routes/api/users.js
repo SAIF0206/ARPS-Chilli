@@ -25,16 +25,15 @@ router.post("/register", (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        brcypt.hash(req.body.Password, 10, (err, hash) => {
-          data.Password = hash;
-          User.create(data)
-            .then((user) => {
-              res.json({ status: user.UserName + " Registered" });
-            })
-            .catch((err) => {
-              res.send("error" + err);
-            });
-        });
+        // brcypt.hash(req.body.Password, 10, (err, hash) => {
+        data.Password = req.body.Password;
+        User.create(data)
+          .then((user) => {
+            res.json({ status: user.UserName + " Registered" });
+          })
+          .catch((err) => {
+            res.send("error" + err);
+          });
       } else {
         res.json({ error: "User already exists" });
       }
@@ -55,9 +54,9 @@ router.post("/login", (req, res) => {
   })
     .then((user) => {
       if (user) {
-        if (brcypt.compareSync(req.body.Password, user.Password)) {
-          //User is Matched
-
+        // if (brcypt.compareSync(req.body.Password, user.Password)) {
+        //User is Matched
+        if (req.body.Password == user.Password) {
           //create JWT Payload
           const payload = {
             Name: user.Name,

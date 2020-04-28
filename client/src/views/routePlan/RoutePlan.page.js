@@ -4,14 +4,7 @@ import '../home/index.css';
 import { DatePicker, Button } from 'antd';
 import TopHeader from '../layout/TopHeader'
 import moment from "moment"
-import RoutePlanTable from '../table/RoutePlan.table'
-
-
-// function onChange(date, dateString) {
-
-//     console.log(date, dateString);
-
-// }
+import RoutePlanTable from './RoutePlan.table'
 
 function disabledDate(current) {
     // DataPicker restirct only today and the day after today
@@ -22,7 +15,7 @@ export default class RoutePlanPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
+ 
         }
 
         this.handleClickWW = this.handleClickWW.bind(this)
@@ -33,6 +26,8 @@ export default class RoutePlanPage extends Component {
         this.props.history.push("/RoutePlan")
     }
     render() {
+        let date=this.props.date
+        console.log('pass date',this.props)
         return (
             <div className="layout">
                 <TopHeader />
@@ -42,7 +37,7 @@ export default class RoutePlanPage extends Component {
                         <div>
                             <DatePicker
                                 //Pass selected date here
-                                defaultValue={moment('2020-04-19')}
+                                defaultValue={moment()}
                                 disabledDate={disabledDate}
                                 disabled />
                             <Button type="primary" danger style={{ marginLeft: '8px' }} onClick={this.handleClickWW}>Send to Workwave</Button>

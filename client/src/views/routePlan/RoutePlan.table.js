@@ -1,13 +1,128 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Table, Button, Row, Col, Popover, Divider, Form, Select } from 'antd';
-import {BrowserRouter as Router,Link,withRouter} from "react-router-dom";
+import { Table, Button, Row, Col, Popover ,Tooltip} from 'antd';
+import { BrowserRouter as Router, withRouter } from "react-router-dom";
 // import TimeSlider from '../../components/TimeSlider';
-import WWRoutePlan from '../../components/WWRoutePlan'
-import AddHelper from '../../components/AddHelper'
+import WWRoutePlan from './WWRoutePlan'
+import AddHelper from './AddHelper'
+import OrderInfo from '../home/Order/OrderInfo'
 
-const { Option } = Select;
+// const { Option } = Select;
 const clickContent = <div>This is click content.</div>;
+const mystyle = {
+	width: '100.1%', margin: '2px'
+	// margin: 
+}
+const getOrder =
+{
+	"orders": {
+		"4516b2e1-43dc-49a8-8bfb-7190fa60df21": {
+			"id": "4516b2e1-43dc-49a8-8bfb-7190fa60df21",
+			"name": "Order 1",
+			"eligibility": {
+				"type": "on",
+				"onDates": [
+					"20151204",
+					"20151205",
+					"20151206"
+				]
+			},
+			"forceVehicleId": null,
+			"priority": 0,
+			"loads": {},
+			"pickup": null,
+			"delivery": {
+				"depotId": null,
+				"location": {
+					"address": "3101-3199 Florida Ave, Jasper, AL 35501, USA",
+					"latLng": [
+						33817872,
+						-87266893
+					],
+					"status": "OK"
+				},
+				"timeWindows": [
+					{
+						"startSec": 30600,
+						"endSec": 37800
+					},
+					{
+						"startSec": 45000,
+						"endSec": 55800
+					}
+				],
+				"notes": "demonstrate the concept of multiple time windows as well as eligibility date range",
+				"serviceTimeSec": 600,
+				"tagsIn": [],
+				"tagsOut": [],
+				"customFields": {}
+			},
+			"isService": false
+		},
+		"0d56e7a3-c737-472e-bec9-e2f19d4865d3": {
+			"id": "0d56e7a3-c737-472e-bec9-e2f19d4865d3",
+			"name": "Order 2",
+			"eligibility": {
+				"type": "on",
+				"onDates": [
+					"20151204"
+				]
+			},
+			"forceVehicleId": null,
+			"priority": 20,
+			"loads": {},
+			"pickup": null,
+			"delivery": {
+				"depotId": null,
+				"location": {
+					"address": "701-799 Birmingham Ave, Jasper, AL 35501, USA",
+					"latLng": [
+						33845214,
+						-87273604
+					],
+					"status": "OK"
+				},
+				"timeWindows": [
+					{
+						"startSec": 32400,
+						"endSec": 43200
+					}
+				],
+				"notes": "Demonstrate the concept of priority and notes (Driver must use the back door to enter the building)",
+				"serviceTimeSec": 1800,
+				"tagsIn": [],
+				"tagsOut": [],
+				"customFields": {}
+			},
+			"isService": false
+		}
+	},
+	"depots": {}
+}
+
+function orderAssign(orderId) {
+	if (orderId === 150171) {
+		return '#f50';
+	}
+	else if (orderId === 150175) {
+		return '#ff9933';
+	}
+	else {
+		return '#87d068'
+	}
+}
+
+function toopTip(orderId){
+	if (orderId === 150171) {
+		return 'Unassigned';
+	}
+	else if (orderId === 150175) {
+		return 'Need Helper';
+	}
+	else {
+		return 'Assigned'
+	}
+}
 
 class RoutePlanTable extends React.Component {
 	state = {
@@ -15,31 +130,13 @@ class RoutePlanTable extends React.Component {
 		hovered: false,
 	};
 
-	hide = () => {
-		this.setState({
-			clicked: false,
-			hovered: false,
-		});
-	};
-
-	handleHoverChange = visible => {
-		this.setState({
-			hovered: visible,
-			clicked: false,
-		});
-	};
-
-	handleClickChange = visible => {
-		this.setState({
-			clicked: visible,
-			hovered: false,
-		});
-	};
-
 	constructor() {
 		super();
 		this.handleClickId = this.handleClickId.bind(this)
+		this.onShowDetail=this.onShowDetail.bind(this)
+
 		this.state = {
+			record:[],
 			selectedOrder: [],
 			driver: [],
 			items: [],
@@ -67,22 +164,27 @@ class RoutePlanTable extends React.Component {
 					// 		{/* <Button type="link" onClick={() => { this.handleClickId(order)}}>{orderId}</Button> */}
 
 					// 	</span>),
-					render: orderId =>
+					render: (orderId, record, index) =>
+				
+						<Tooltip title={`${toopTip(orderId)}`}>
 						<Popover
-							content={
-								<div>
-									<div>{clickContent}</div>
-									{/* <Divider dashed/> */}
-									<Link to='/OrderDetailPage'>More Detail</Link>
-
-								</div>
-							}
-							title={'Order ID: ' + orderId}
-							trigger="click"
-						// visible={this.state.visible}
-						// onVisibleChange={this.handleVisibleChange}
+						onClick={this.onShowDetail.bind(this, record, index)}
+						placement="right"
+						content={
+							//clickContent,
+							<div>
+								<OrderInfo data={record} />
+							</div>
+						}
+						// title={'Order ID: ' + text}
+						trigger="click"
 						>
-							<Button type="primary" ghost>{orderId}</Button>
+						{/* <Button type="link" ><b>Order Detail</b></Button> */}
+						{/* <Divider type="vertical" />
+						<Button type="link" ><b>Delivery Detail</b></Button> */}
+	
+						
+							<Button className='wwOrderId' type="primary" style={{ background: `${orderAssign(orderId)}`, borderColor: `${orderAssign(orderId)}` }}><b>{orderId}</b></Button>
 							{/* <Button size='small' onClick={this.showModal}>{orderId}</Button>
 							<Modal
 								title="Basic Modal"
@@ -91,10 +193,10 @@ class RoutePlanTable extends React.Component {
 								onCancel={this.handleCancel}
 							>
 							</Modal> */}
-						</Popover>,
+						</Popover>
+					</Tooltip>,		
 
-
-					width: 100,
+					width: 70,
 					align: 'center',
 					fixed: 'left',
 				},
@@ -104,21 +206,19 @@ class RoutePlanTable extends React.Component {
 					key: 'driver',
 					render: driver =>
 						<div>
-							{driver}Driver from ww
+							{driver}Driver
 						</div>,
-					width: 150,
+					width: 80,
 					align: 'center',
 				},
 				{
 					title: 'Helper',
-					dataSource:`${this.state.driver}`,
-					dataIndex: 'Name',
 					key: 'driver',
-					render: driver =>
-					<div>
-						<AddHelper content={driver}/>
-					</div>,
-					width: 100,
+					render: () =>
+						<div>
+							<AddHelper />
+						</div>,
+					width: 90,
 					align: 'center',
 				},
 				// {
@@ -136,15 +236,18 @@ class RoutePlanTable extends React.Component {
 				// 	align: 'center',
 				// },
 				{
-					title: 'Time',
+					title:
+						<div className="timeScaler" >
+							<img src={require('../../assets/img/time scale.png')} alt="time scaler" style={mystyle} />
+						</div>,
 					dataIndex: 'FunctionDate',
 					key: 'wwfunctionDate',
 					render: (e) =>
-						<div className='timeSlider'>
+						<div >
 							<Row>
 
 								<Col span={24}>
-									<WWRoutePlan content={e} />
+									<WWRoutePlan  style={{marginLeft:8,marginRight:8,marginTop:16}} content={e} />
 								</Col>
 								{/* <Col span={i2}>
 								<Slider range step='3.125' defaultValue={[37.5, 50]} />
@@ -165,6 +268,11 @@ class RoutePlanTable extends React.Component {
 
 	}
 
+	onShowDetail(record,index){
+		this.setState({
+			record:record
+		})
+	}
 
 	handleClickId(order) {
 		console.log(order)
@@ -242,8 +350,11 @@ class RoutePlanTable extends React.Component {
 
 
 		return (
+
 			<Router>
 				<div className="shadow-radius">
+
+
 					<Table
 						bordered
 						columns={this.state.columns}
@@ -251,13 +362,14 @@ class RoutePlanTable extends React.Component {
 						loading={this.state.loading}
 						// onChange={this.handleTableChange}
 						pagination={this.state.pagination}
-					// rowKey={record => record.location.postcode}
-					scroll={{ x: '140%', y: 500 }}
+						// rowKey={record => record.location.postcode}
+						scroll={{ x: '140%', y: '100%' }}
 					/>
 					{/* <Switch>
 						<Route path="/OrderDetailPage/:Id" children={<Child />} />
 					</Switch> */}
-				</div></Router>
+				</div>
+			</Router>
 		);
 	}
 }

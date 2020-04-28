@@ -33,11 +33,40 @@ router.get("/workwave", (req, res) => {
       }
     )
     .then((data) => {
-      console.log(data.data.drivers);
       res.send(data.data.drivers);
     })
     .catch((err) => {
       console.log("Errors" + err);
     });
 });
+
+// // @route   GET api/drivers/add
+// //@desc     Add drivers
+// //@access   Public
+// //Make a lot of changes in driver's Data.
+// router.post("/add", (req, res) => {
+//   axios
+//     .post(
+//       "https://wwrm.workwave.com/api/v1/territories/922b603c-c822-4469-89a7-e9bacab8abfb/drivers",
+//       {
+//         headers: {
+//           Accept: "application/json",
+//           "Content-Type": "application/json",
+//           "X-WorkWave-Key": "655be892-096b-48d4-9cd0-86cfba1ce55a",
+//         },
+//         Body: JSON.stringify({
+//           name: "Saif",
+//           email: "Saif@chilliapi.com.sg",
+//           password: "chilliapi",
+//           gpsDeviceId: null,
+//         }),
+//       }
+//     )
+//     .then((data) => {
+//       res.send(data.data.requestId);
+//     })
+//     .catch((err) => {
+//       console.log("Errors" + err);
+//     });
+// });
 module.exports = router;

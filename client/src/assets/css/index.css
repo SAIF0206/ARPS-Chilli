@@ -1,0 +1,42 @@
+.rc-slider-track {
+    position: absolute;
+    left: 0;
+    height: 4px;
+    border-radius: 6px;
+    background-color: #b7abfb;
+}
+
+:global(.text) {
+    font-size: 12px;
+}
+
+.ant-table-tbody>tr>td {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.ant-table-thead>tr>th {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.ant-btn {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.rc-slider-track {
+    border-radius: 4px;
+}
+
+.rc-slider-dot-active {
+    border-color: gray;
+}
+
+.ant-menu {
+    font-size: 20px;
+}

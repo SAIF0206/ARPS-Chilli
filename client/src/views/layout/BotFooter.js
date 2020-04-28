@@ -8,7 +8,7 @@ class BotFooter extends Component {
     render() {
         return (
             <Layout className="footer">
-                <Footer style={{ textAlign: 'center' }}>ARPS - Mohd Saif and Chai Cai- Chilli Api</Footer>
+                <Footer style={{ textAlign: 'center' }}>@ARPS - Chilli Api</Footer>
             </Layout> 
         );
     }

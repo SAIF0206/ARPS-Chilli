@@ -1,85 +1,92 @@
 import React, { Component } from 'react';
+import '../../../assets/css/index.css'
 import 'antd/dist/antd.css';
-import { Table, Button, Row, Col, Tag, Modal, Popover } from 'antd';
-import TimeSlider from '../../components/TimeSlider.js'
-import { Link } from 'react-router-dom';
+import { Table, Button, Row, Col, Tag, Popover} from 'antd';
+import TimeSlider from './TimeSlider.js'
 import OrderInfo from './OrderInfo'
+// import axios from 'axios'
 
+//handel order tags 
 function eventTag(eventType) {
+	//For mini buffet or bento set, tag would be special color 'volcano'
 	if (eventType === 'Mini Buffet, 迷你套餐' || eventType === 'Bento Set, 套餐打包') { return <Tag color='volcano'>{eventType}</Tag> }
+	
+	//TODO add if more eventType label we need
 	// else if(eventType== 'Corporate Function, 公司') 
 	// {return <Tag  color='green'>{eventType}</Tag>}
 	else { return <Tag color='geekblue'>{eventType}</Tag> }
 }
 
+//handle menu pax color
 function paxCap(MenuPax) {
+	//For menupax (0,65],(65,100] and [100,...] seperate with different color 
 	if (MenuPax <= 65) { return <Tag color='#009933'>{MenuPax}</Tag> }
 	else if (MenuPax > 65 && MenuPax <= 100) { return <Tag color='#ff9900'>{MenuPax}</Tag> }
 	else { return <Tag color='#cc0000'>{MenuPax}</Tag> }
 }
-const clickContent = <div>This is click content.</div>;
-const hoverContent = <div>This is hover content.</div>;
+
+//handle menu volume
+function paxVol(MenuPax) {
+	let n = parseInt(MenuPax)
+	// console.log(n)
+	// switch(n){
+	// 	case(n>=1 && n<=30):return '80'
+	// 	case(n>=31 && n<=60):return '140'
+	// 	case(n>=61 && n<=90):return '220'
+	// 	case(n>=91 && n<=120):return '280'
+	// 	case(n>=120 && n<=200):return '350'
+	// 	default:return n;
+	// }
+	if (n >= 1 && n <= 30) { return '80' }
+	else if (n >= 31 && n <= 60) { return '140' }
+	else if (n >= 61 && n <= 90) { return '220' }
+	else if (n >= 91 && n <= 120) { return '280' }
+	else if (n >= 120 && n <= 200) { return '350' }
+	else { return null }
+}
+const mystyle = {
+	margin: '-8px',
+	width: '101.8%'
+};
 
 class OrderIndex extends Component {
+	//hide or show the popover of order detail
 	state = {
 		clicked: false,
-		hovered: false,
+		//table size
+		size: 'small',
 	};
-
 	hide = () => {
 		this.setState({
 			clicked: false,
-			hovered: false,
+
 		});
 	};
-
-	handleHoverChange = visible => {
-		this.setState({
-			hovered: visible,
-			clicked: false,
-		});
-	};
-
 	handleClickChange = visible => {
 		this.setState({
 			clicked: visible,
-			hovered: false,
+
 		});
 	};
 
 	state = {
-		Id: '',
-		EventType: '',
-		OrderDate: '',
-		FunctionDate: '',
-		ContactPerson: '',
-		ContactNumber: '',
-		MenuName: '',
-		MenuRate: '',
-		MenuPax: '',
-		MenuSection: '',
-		Block: '',
-		Street: '',
-		Level: '',
-		Unit: '',
-		Building: '',
-		Postal: 0,
-		DeliveryNote: '',
-		errors: {},
+		orders: null,
 	};
+
 	constructor(props) {
 		super(props);
 		this.handleClickOrder = this.handleClickOrder.bind(this);
+		this.onShowDetail = this.onShowDetail.bind(this);
 		this.state = {
-			orderId: "",
-			items: [],
+			record: [],
+			orders: [],
 			isLoaded: false,
 			pagination: {
-				// disabled:true,
-				pageSize: 9999,
+				pageSize: 999999,
 				hideOnSinglePage: true,
 			},
 			loading: false,
+
 			// selectedRowKeys: [],
 
 			//table header
@@ -88,38 +95,31 @@ class OrderIndex extends Component {
 					title: 'OrderID',
 					dataIndex: 'Id',
 					key: 'orderId',
-					// render: orderId => <Button type="link" onClick={() => { this.handleClickId(orderId) }}>{orderId}</Button>,
-					// render: orderId=><Link to={{ path : '/OrderInfo' , state : { from:'orderId' }}}>{orderId} </Link>,
-					// render: orderId=><Link to="/OrderDetailPage">{orderId} </Link>,
-					//value:orderId, row:record, ind
-					render: orderId =>
-						<center>
-							<Popover placement="right"
-
-								content={
-									clickContent,
-									<div>
-										<OrderInfo orderId={orderId} />
-									</div>
-								}
-								title={'Order ID: ' + orderId}
-								trigger="click"
-							>
-								<Button type="link" >{orderId}</Button>
-								{/* <Button size='small' onClick={this.showModal}>{orderId}</Button>
-						<Modal
-							title="Basic Modal"
-							visible={this.state.visible}
-							onOk={this.handleOk}
-							onCancel={this.handleCancel}
-						>
-						</Modal> */}
-							</Popover></center>,
-
-
+					render: (text, record, index) =>
+						<div>
+							<center>
+								
+									<Popover
+										onClick={this.onShowDetail.bind(this, record, index)}
+										placement="right"
+										content={
+											//clickContent,
+											<div>
+												<OrderInfo data={record} />
+											</div>
+										}
+										// title={'Order ID: ' + text}
+										trigger="click"
+									>
+										<Button type="link" ><b>{text}</b></Button>
+									</Popover>
+						
+							</center>
+						</div>,
 					width: 60,
+
 					align: 'center',
-					fixed: 'left',
+					// fixed: 'left',
 				},
 				{
 					title: 'EventType',
@@ -137,6 +137,8 @@ class OrderIndex extends Component {
 					title: 'Address',
 					dataIndex: 'Street',
 					key: 'address',
+					render: e =>
+						<span><b>{e}</b></span>,
 					width: 100,
 					align: 'center',
 				},
@@ -145,28 +147,39 @@ class OrderIndex extends Component {
 					dataIndex: 'MenuPax',
 					key: 'menuPax',
 					render: menuPax =>
-						<span>
+						<span><b>
 							{paxCap(menuPax)}
-						</span>
-					,
+						</b></span>,
 					width: 40,
 					align: 'center',
 				},
 				{
-					title: 'Time',
+					title: 'Volume',
+					dataIndex: 'MenuPax',
+					key: 'paxToVol',
+					render: menuPax =>
+						<span>
+							<p><b>{paxVol(menuPax)}</b></p>
+						</span>,
+					width: 40,
+					align: 'center',
+				},
+				{
+					title:
+						<div className="timeScaler" >
+							<img src={require('../../../assets/img/time scale.png')} alt="time scaler" style={mystyle} />
+						</div>,
 					dataIndex: 'FunctionDate',
 					key: 'functionDate',
-					render: (time) =>
+					render: (date) =>
 
 						<div className='timeSlider'>
 							<Row>
-								<Col span={20}>
-									<TimeSlider content={time} />
+								<Col span={24}>
+									<TimeSlider content={date} />
 								</Col>
 							</Row>
-						</div>
-
-					,
+						</div>,
 					width: 600,
 					align: 'left',
 
@@ -177,85 +190,53 @@ class OrderIndex extends Component {
 
 	}
 
+	showDetailOrder = (orderId, e) => {
+		console.log('OrderId', orderId)
+		console.log('Event', e)
+	}
+
+
 
 	handleClickOrder(order) {
 		this.setState({
 			order
 		})
-		// console.log(record)
-		// const { Id,
-		// 	EventType,
-		// 	OrderDate,
-		// 	FunctionDate,
-		// 	ContactPerson,
-		// 	ContactNumber,
-		// 	MenuName,
-		// 	MenuRate,
-		// 	MenuPax,
-		// 	MenuSection,
-		// 	Block,
-		// 	Street,
-		// 	Level,
-		// 	Unit,
-		// 	Building,
-		// 	Postal,
-		// 	DeliveryNote } = this.state
-
-		// const selectOrder = {
-		// 	Id,
-		// 	EventType,
-		// 	OrderDate,
-		// 	FunctionDate,
-		// 	ContactPerson,
-		// 	ContactNumber,
-		// 	MenuName,
-		// 	MenuRate,
-		// 	MenuPax,
-		// 	MenuSection,
-		// 	Block,
-		// 	Street,
-		// 	Level,
-		// 	Unit,
-		// 	Building,
-		// 	Postal,
-		// 	DeliveryNote
-		// }
 	}
 
-	// handleToggle = prop => enable => {
-	// 	this.setState({ [prop]: enable });
-	// };
+	//fetch data from API by axios
+	// async componentWillMount(){
+	// 	console.log('componentWillMount')
+	// 	let result= await axios.get('http://localhost:4000/api/order/orderdata')
+	// 	// console.log(result)
+	// 	let data=(result.data)
+	// 	console.log(data)
+	// 	this.setState({
+	// 		selectOrderData:data
+	// 	})
+	// }
 
-	//
 	componentDidMount() {
 		fetch('http://localhost:4000/api/order/orderdata')
 			.then(res => res.json())
 			.then(json => {
 
 				// jsonData is parsed json object received from url
-
 				const pagination = { ...this.state.pagination };
 				// Read total count from server
 				pagination.total = json.totalCount
-				pagination.total = 200;
+				// pagination.total = 200;
 				this.setState({
 					loading: false,
-					items: json,
+					orders: json,
 					pagination
 				});
-
+				console.log("Show Orders", this.state.orders)
 			})
 			.catch((error) => {
 				// handle your errors here
 				console.error(error)
 			})
 	};
-
-	handleSelectDate(orderId) {
-		this.setState({
-			orderId
-		})
-	}
 
 	componentWillUnmount() {
 		this.setState = () => {
@@ -277,8 +258,17 @@ class OrderIndex extends Component {
 	// 	});
 	// };
 
+	onShowDetail(record, index) {
+		console.log(record)
+		console.log(index)
+		this.setState({
+			record: record
+		})
+	}
+
 	render() {
 		let selectDate = this.props.date
+
 		return (
 			<div className="table">
 
@@ -286,13 +276,15 @@ class OrderIndex extends Component {
 
 					bordered
 					columns={this.state.columns}
-					dataSource={this.state.items.filter(d => d.FunctionDate.slice(0, 10) === selectDate)}
+					dataSource={this.state.orders.filter(d => d.FunctionDate.slice(0, 10) === selectDate)}
 					loading={this.state.loading}
 					// onChange={this.handleTableChange}
 					pagination={this.state.pagination}
 					// rowKey={record => record.location.postcode}
-					scroll={{ x: '140%', y: 500 }}
+					scroll={{ x: '160%', y: 500 }}
 				/>
+
+
 
 			</div>
 		);
