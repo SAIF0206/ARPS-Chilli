@@ -26,8 +26,7 @@ export default class RoutePlanPage extends Component {
         this.props.history.push("/RoutePlan")
     }
     render() {
-        let date=this.props.date
-        console.log('pass date',this.props)
+
         return (
             <div className="layout">
                 <TopHeader />

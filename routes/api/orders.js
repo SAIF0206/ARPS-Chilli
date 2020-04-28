@@ -35,70 +35,73 @@ router.get("/orderdata", (req, res) =>
     .then((order) => {
       //Algorithm To calculate Volume
       //If Volume is not NUll it goes inside
+      if (Order.Volume != null) {
+        res.send(order).json;
+      } else {
+        Order.update(
+          {
+            Volume: 80,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [1, 30],
+              },
+            },
+          }
+        );
+        Order.update(
+          {
+            Volume: 140,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [31, 60],
+              },
+            },
+          }
+        );
+        Order.update(
+          {
+            Volume: 220,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [61, 90],
+              },
+            },
+          }
+        );
+        Order.update(
+          {
+            Volume: 280,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [91, 120],
+              },
+            },
+          }
+        );
+        Order.update(
+          {
+            Volume: 350,
+          },
+          {
+            where: {
+              MenuPax: {
+                [Op.between]: [120, 200],
+              },
+            },
+          }
+        );
 
-      Order.update(
-        {
-          Volume: 80,
-        },
-        {
-          where: {
-            MenuPax: {
-              [Op.between]: [1, 30],
-            },
-          },
-        }
-      );
-      Order.update(
-        {
-          Volume: 140,
-        },
-        {
-          where: {
-            MenuPax: {
-              [Op.between]: [31, 60],
-            },
-          },
-        }
-      );
-      Order.update(
-        {
-          Volume: 220,
-        },
-        {
-          where: {
-            MenuPax: {
-              [Op.between]: [61, 90],
-            },
-          },
-        }
-      );
-      Order.update(
-        {
-          Volume: 280,
-        },
-        {
-          where: {
-            MenuPax: {
-              [Op.between]: [91, 120],
-            },
-          },
-        }
-      );
-      Order.update(
-        {
-          Volume: 350,
-        },
-        {
-          where: {
-            MenuPax: {
-              [Op.between]: [120, 200],
-            },
-          },
-        }
-      );
-
-      //Here to get all data.
-      res.send(order).json;
+        //Here to get all data.
+        res.send(order).json;
+      }
     })
     .catch((err) => console.log("Error !!" + err))
 );

@@ -8,96 +8,10 @@ import AddHelper from './AddHelper'
 import OrderInfo from '../home/Order/OrderInfo'
 
 // const { Option } = Select;
-const clickContent = <div>This is click content.</div>;
+// const clickContent = <div>This is click content.</div>;
 const mystyle = {
 	width: '100.1%', margin: '2px'
 	// margin: 
-}
-const getOrder =
-{
-	"orders": {
-		"4516b2e1-43dc-49a8-8bfb-7190fa60df21": {
-			"id": "4516b2e1-43dc-49a8-8bfb-7190fa60df21",
-			"name": "Order 1",
-			"eligibility": {
-				"type": "on",
-				"onDates": [
-					"20151204",
-					"20151205",
-					"20151206"
-				]
-			},
-			"forceVehicleId": null,
-			"priority": 0,
-			"loads": {},
-			"pickup": null,
-			"delivery": {
-				"depotId": null,
-				"location": {
-					"address": "3101-3199 Florida Ave, Jasper, AL 35501, USA",
-					"latLng": [
-						33817872,
-						-87266893
-					],
-					"status": "OK"
-				},
-				"timeWindows": [
-					{
-						"startSec": 30600,
-						"endSec": 37800
-					},
-					{
-						"startSec": 45000,
-						"endSec": 55800
-					}
-				],
-				"notes": "demonstrate the concept of multiple time windows as well as eligibility date range",
-				"serviceTimeSec": 600,
-				"tagsIn": [],
-				"tagsOut": [],
-				"customFields": {}
-			},
-			"isService": false
-		},
-		"0d56e7a3-c737-472e-bec9-e2f19d4865d3": {
-			"id": "0d56e7a3-c737-472e-bec9-e2f19d4865d3",
-			"name": "Order 2",
-			"eligibility": {
-				"type": "on",
-				"onDates": [
-					"20151204"
-				]
-			},
-			"forceVehicleId": null,
-			"priority": 20,
-			"loads": {},
-			"pickup": null,
-			"delivery": {
-				"depotId": null,
-				"location": {
-					"address": "701-799 Birmingham Ave, Jasper, AL 35501, USA",
-					"latLng": [
-						33845214,
-						-87273604
-					],
-					"status": "OK"
-				},
-				"timeWindows": [
-					{
-						"startSec": 32400,
-						"endSec": 43200
-					}
-				],
-				"notes": "Demonstrate the concept of priority and notes (Driver must use the back door to enter the building)",
-				"serviceTimeSec": 1800,
-				"tagsIn": [],
-				"tagsOut": [],
-				"customFields": {}
-			},
-			"isService": false
-		}
-	},
-	"depots": {}
 }
 
 function orderAssign(orderId) {

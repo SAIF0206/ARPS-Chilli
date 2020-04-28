@@ -90,28 +90,22 @@ export default class OrderInfo extends Component {
 
   render() {
 
-    const orderInfo = this.props.data
+    let orderInfo = this.props.data
     console.log(this.props.data)
-
+    let functionTime=orderInfo.FunctionDate
+    let functionDate=orderInfo.FunctionDate.slice(0,10)
+    let deliveryTime=(orderInfo.FunctionDate.slice(11,13)-1).toString()+":"+orderInfo.FunctionDate.slice(14,19)
     return (
       <div>
-        <Descriptions bordered title="Order Info." size={this.state.size} >
+        <Descriptions bordered title="Order Info." size={"small"} >
           <Descriptions.Item label="Id" span={3} ><b>{orderInfo.Id}</b></Descriptions.Item>
-          <Descriptions.Item label="EventType"  ><b>{orderInfo.EventType}</b></Descriptions.Item>
-          <Descriptions.Item label="FunctionDate" ><b>{orderInfo.FunctionDate.slice(0, 10)}</b></Descriptions.Item>
-          <Descriptions.Item label="OrderDate" ><b>{orderInfo.OrderDate.slice(0, 10)}</b></Descriptions.Item>
-          <Descriptions.Item label="ContactPerson" span={3}><b>{orderInfo.ContactPerson}</b></Descriptions.Item>
-          <Descriptions.Item label="ContactNumber" span={3}><b>{orderInfo.ContactNumber}</b></Descriptions.Item>
-          <Descriptions.Item label="Menu" span={3}>
-            MenuName: <b>{orderInfo.MenuName}</b>
-            <br />
-              MenuRate: <b>{orderInfo.MenuRate}</b>
-            <br />
-              MenuPax: <b>{orderInfo.MenuPax}</b>
-            <br />
-              MenuSection: <b>{orderInfo.MenuSection}</b>
-            <br />
-          </Descriptions.Item>
+          <Descriptions.Item label="Status" span={3} ><b>{orderInfo.Status}</b></Descriptions.Item>
+          <Descriptions.Item label="FunctionDate" span={1.5}><b>{functionDate}</b></Descriptions.Item>
+          <Descriptions.Item label="DeveliveryTime" span={1.5}><b>{deliveryTime}</b></Descriptions.Item>
+          <Descriptions.Item label="EventType"  span={3}><b>{orderInfo.EventType}</b></Descriptions.Item>
+          {/* <Descriptions.Item label="OrderDate" ><b>{orderInfo.OrderDate.slice(0, 10)}</b></Descriptions.Item> */}
+          <Descriptions.Item label="ContactPerson" span={1.5}><b>{orderInfo.ContactPerson}</b></Descriptions.Item>
+          <Descriptions.Item label="ContactNumber" span={1.5}><b>{orderInfo.ContactNumber}</b></Descriptions.Item>
           <Descriptions.Item label="Address" span={3}>
             Block: <b>{orderInfo.Block}</b>
             <br />
@@ -126,7 +120,25 @@ export default class OrderInfo extends Component {
               Postal:<b>{orderInfo.PostalCode}</b>
             <br />
           </Descriptions.Item>
-          <Descriptions.Item label="DeliveryNote" span={3}>{orderInfo.DeliveryNote}</Descriptions.Item>
+          <Descriptions.Item label="Delivery Note" span={3}>{orderInfo.DeliveryNote}</Descriptions.Item>
+          <Descriptions.Item label="Name" span={3}><b>{orderInfo.name}</b></Descriptions.Item>
+          <Descriptions.Item label="Menu Name" span={3}><b>{orderInfo.MenuName}</b></Descriptions.Item>
+          <Descriptions.Item label="Menu Section" span={3}><b>{orderInfo.MenuSection}</b></Descriptions.Item>
+          <Descriptions.Item label="Alternate Contact Person" span={3}><b>{orderInfo.AlterContactPerson}</b></Descriptions.Item>
+          <Descriptions.Item label="Alternate Contact Number" span={3}><b>{orderInfo.AlterContactNumber}</b></Descriptions.Item>
+          <Descriptions.Item label="Setup Details" span={3}><b>{orderInfo.Setupdetail}</b></Descriptions.Item>
+
+          {/* <Descriptions.Item label="Menu" span={3}>
+             MenuName: <b>{orderInfo.MenuName}</b>
+            <br />
+              MenuRate: <b>{orderInfo.MenuRate}</b>
+            <br />
+              MenuPax: <b>{orderInfo.MenuPax}</b>
+            <br />
+              MenuSection: <b>{orderInfo.MenuSection}</b>
+            <br />
+          </Descriptions.Item> */}
+          
 
 
         </Descriptions>
